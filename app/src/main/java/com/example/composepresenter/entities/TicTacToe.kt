@@ -2,20 +2,7 @@ package com.example.composepresenter.entities
 
 class TicTacToe private constructor() {
     companion object {
-
         fun newGame(): TicTacToe = TicTacToe()
-
-        private const val EMPTY = ' '
-
-        private object PlayerOne {
-            const val number = 1
-            const val symbol = 'X'
-        }
-
-        private object PlayerTwo {
-            const val number = 2
-            const val symbol = 'O'
-        }
     }
 
     object InvalidMoveException: Throwable()
@@ -26,9 +13,16 @@ class TicTacToe private constructor() {
         Empty,
     }
 
+    enum class Result {
+        InProgress,
+        PlayerOneWon,
+        PlayerTwoWon,
+        Tie,
+    }
+
     private var isPlayerOneTurn: Boolean = true
 
-    private val board = Array(3) { Array(3) { EMPTY } }
+    private val board = Array(3) { Array(3) { Play.Empty } }
 
     fun play(x: Int, y: Int) {
         if (inputAreValid(x, y))
@@ -38,16 +32,7 @@ class TicTacToe private constructor() {
     }
 
     fun getBoard(): Array<Array<Play>> {
-
-        return board.map { row ->
-            row.map { play ->
-                when (play) {
-                    PlayerOne.symbol -> Play.PlayerOne
-                    PlayerTwo.symbol -> Play.PlayerTwo
-                    else -> Play.Empty
-                }
-            }.toTypedArray()
-        }.toTypedArray()
+        return board
     }
 
     private fun inputAreValid(x: Int, y: Int): Boolean {
@@ -61,10 +46,10 @@ class TicTacToe private constructor() {
         return x in verticalRange && y in horizontalRange
     }
 
-    private fun Char.isEmpty() = this == EMPTY
+    private fun Play.isEmpty() = this == Play.Empty
 
     private fun doPlay(x: Int, y: Int) {
-        board[x][y] = if (isPlayerOneTurn) PlayerOne.symbol else PlayerTwo.symbol
+        board[x][y] = if (isPlayerOneTurn) Play.PlayerOne else Play.PlayerTwo
 
         isPlayerOneTurn = isPlayerOneTurn.not()
     }
@@ -72,7 +57,7 @@ class TicTacToe private constructor() {
     fun getResult(): Result {
 
         whoIsTheWinner()?.let {
-            return if (it == PlayerOne.number)
+            return if (it == Play.PlayerOne)
                 Result.PlayerOneWon
             else
                 Result.PlayerTwoWon
@@ -93,64 +78,64 @@ class TicTacToe private constructor() {
         return true
     }
 
-    private fun whoIsTheWinner(): Int? {
+    private fun whoIsTheWinner(): Play? {
         whoIsTheWinnerInHorizontal()?.let { return it }
         hasWinnerInVertical()?.let { return it }
         whoIsTheWinnerInDiagonal()?.let { return it }
         return null
     }
 
-    private fun whoIsTheWinnerInHorizontal(): Int? {
+    private fun whoIsTheWinnerInHorizontal(): Play? {
         for (i in board.indices)
             whoIsTheWinnerInRow(i)?.let { return it }
 
         return null
     }
 
-    private fun hasWinnerInVertical(): Int? {
+    private fun hasWinnerInVertical(): Play? {
         for (j in board[0].indices)
             whoIsTheWinnerInColumn(j)?.let { return it }
 
         return null
     }
 
-    private fun whoIsTheWinnerInDiagonal(): Int? {
+    private fun whoIsTheWinnerInDiagonal(): Play? {
         whoIsTheWinnerInMainDiagonal()?.let { return it }
         whoIsTheWinnerInAntiDiagonal()?.let { return it }
 
         return null
     }
 
-    private fun whoIsTheWinnerInRow(i: Int): Int? {
+    private fun whoIsTheWinnerInRow(i: Int): Play? {
         val row = board[i].asList()
         return whoIsTheWinnerIn(row)
     }
 
-    private fun whoIsTheWinnerInColumn(j: Int): Int? {
-        val column = mutableListOf<Char>()
+    private fun whoIsTheWinnerInColumn(j: Int): Play? {
+        val column = mutableListOf<Play>()
         for (i in board.indices)
             column.add(board[i][j])
 
         return whoIsTheWinnerIn(column)
     }
 
-    private fun whoIsTheWinnerInMainDiagonal(): Int? {
-        val mainDiagonal = mutableListOf<Char>()
+    private fun whoIsTheWinnerInMainDiagonal(): Play? {
+        val mainDiagonal = mutableListOf<Play>()
         for (i in board.indices)
             mainDiagonal.add(board[i][i])
 
         return whoIsTheWinnerIn(mainDiagonal)
     }
 
-    private fun whoIsTheWinnerInAntiDiagonal(): Int? {
-        val antiDiagonal = mutableListOf<Char>()
+    private fun whoIsTheWinnerInAntiDiagonal(): Play? {
+        val antiDiagonal = mutableListOf<Play>()
         for (i in board.indices)
             antiDiagonal.add(board[i][board.lastIndex - i])
 
         return whoIsTheWinnerIn(antiDiagonal)
     }
 
-    private fun whoIsTheWinnerIn(plays: List<Char>): Int? {
+    private fun whoIsTheWinnerIn(plays: List<Play>): Play? {
         if (plays[0].isEmpty())
             return null
 
@@ -158,16 +143,6 @@ class TicTacToe private constructor() {
             if (plays[index] != plays[index + 1])
                 return null
 
-        return if (plays.first() == PlayerOne.symbol)
-            PlayerOne.number
-        else
-            PlayerTwo.number
-    }
-
-    enum class Result {
-        InProgress,
-        PlayerOneWon,
-        PlayerTwoWon,
-        Tie,
+        return plays.first()
     }
 }
