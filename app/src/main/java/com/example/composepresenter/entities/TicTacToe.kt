@@ -36,10 +36,10 @@ class TicTacToe private constructor() {
     }
 
     private fun inputAreValid(x: Int, y: Int): Boolean {
-        return areValid(x, y) && board[x][y].isEmpty()
+        return areInValidRange(x, y) && board[x][y].isEmpty()
     }
 
-    private fun areValid(x: Int, y: Int): Boolean {
+    private fun areInValidRange(x: Int, y: Int): Boolean {
         val verticalRange = board.indices
         val horizontalRange = board[0].indices
 
