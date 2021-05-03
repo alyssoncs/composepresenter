@@ -125,7 +125,6 @@ class TicTacToeTest {
         assertThat(winner).isEqualTo(PlayerTwoWon)
     }
 
-
     @Test
     fun `player two wins on main diagonal`() {
         game.apply {

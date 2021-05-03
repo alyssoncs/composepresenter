@@ -5,7 +5,7 @@ class TicTacToe private constructor() {
         fun newGame(): TicTacToe = TicTacToe()
     }
 
-    object InvalidMoveException: Throwable()
+    object InvalidMoveException : Throwable()
 
     enum class Play {
         PlayerOne,
