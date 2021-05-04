@@ -1,6 +1,6 @@
-package com.example.composepresenter.ui.presentation.doubles
+package com.example.composepresenter.features.tictactoe.presentation.doubles
 
-import com.example.composepresenter.ui.presentation.TicTacToeView
+import com.example.composepresenter.features.tictactoe.presentation.TicTacToeView
 
 class TicTacToeViewSpy : TicTacToeView {
 

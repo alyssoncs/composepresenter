@@ -1,4 +1,4 @@
-package com.example.composepresenter.ui.presentation
+package com.example.composepresenter.features.tictactoe.presentation
 
 interface TicTacToePresenter {
     fun setView(view: TicTacToeView)

@@ -1,13 +1,12 @@
-package com.example.composepresenter.ui.presentation
+package com.example.composepresenter.features.tictactoe.presentation
 
-import com.example.composepresenter.ui.presentation.doubles.TicTacToeViewSpy
+import com.example.composepresenter.features.tictactoe.presentation.doubles.TicTacToeViewSpy
 import com.example.composepresenter.usecases.tictactoe.TicTacToeResult
 import com.example.composepresenter.usecases.tictactoe.TicTacToeScore
 import com.example.composepresenter.usecases.tictactoe.doubles.TicTacToeUseCaseMock
 import com.google.common.truth.Truth.assertThat
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import kotlin.math.exp
 
 class TicTacToePresenterImplTest {
     private lateinit var useCaseMock: TicTacToeUseCaseMock
