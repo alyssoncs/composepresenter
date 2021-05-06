@@ -1,9 +1,9 @@
-package com.example.composepresenter.usecases.doubles
+package com.example.composepresenter.concreteinfra.tictactoerepository.inmemory
 
 import com.example.composepresenter.usecases.infra.TicTacToeRepository
 import com.example.composepresenter.usecases.tictactoe.TicTacToeScore
 
-class TicTacToeRepositoryMock : TicTacToeRepository {
+class InMemoryTicTacToeRepository : TicTacToeRepository {
     private var playerOneScore = 0
     private var playerTwoScore = 0
 

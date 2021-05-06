@@ -2,6 +2,8 @@ package com.example.composepresenter.features.tictactoe.presentation
 
 interface TicTacToeView {
     fun clearBoard()
+    fun enableBoard()
+    fun disableBoard()
     fun setPlayerOneScore(score: Int)
     fun setPlayerTwoScore(score: Int)
     fun updatePlayerOneTile(x: Int, y: Int)

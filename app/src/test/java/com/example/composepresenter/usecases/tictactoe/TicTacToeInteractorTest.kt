@@ -1,6 +1,6 @@
 package com.example.composepresenter.usecases.tictactoe
 
-import com.example.composepresenter.usecases.doubles.TicTacToeRepositoryMock
+import com.example.composepresenter.concreteinfra.tictactoerepository.inmemory.InMemoryTicTacToeRepository
 import com.google.common.truth.Truth.assertThat
 import org.junit.jupiter.api.Assertions.fail
 import org.junit.jupiter.api.BeforeEach
@@ -11,7 +11,7 @@ class TicTacToeInteractorTest {
 
     @BeforeEach
     fun setUp() {
-        useCase = TicTacToeInteractor(TicTacToeRepositoryMock())
+        useCase = TicTacToeInteractor(InMemoryTicTacToeRepository())
     }
 
     @Test

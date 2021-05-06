@@ -29,6 +29,7 @@ class TicTacToePresenterImplTest {
         presenter.onStart()
 
         assertThat(viewSpy.clearBoardWasCalled).isTrue()
+        assertThat(viewSpy.enableBoardWasCalled).isTrue()
         assertThat(viewSpy.playerOneScore).isEqualTo(expectedScore.playerOneScore)
         assertThat(viewSpy.playerTwoScore).isEqualTo(expectedScore.playerTwoScore)
     }
@@ -97,6 +98,7 @@ class TicTacToePresenterImplTest {
 
         assertThat(viewSpy.updatedPlayerOneTile).isEqualTo(Pair(1, 1))
         assertThat(viewSpy.notifyTieWasCalled).isTrue()
+        assertThat(viewSpy.disableBoardWasCalled).isTrue()
     }
 
     @Test
@@ -108,11 +110,14 @@ class TicTacToePresenterImplTest {
             history = listOf(Pair(1, 1))
         )
         useCaseMock.setResult(expectedResult)
+        useCaseMock.setScore(TicTacToeScore(1, 0))
 
         presenter.onTileClick(1, 1)
 
         assertThat(viewSpy.updatedPlayerOneTile).isEqualTo(Pair(1, 1))
         assertThat(viewSpy.notifyPlayerOneVictoryWasCalled).isTrue()
+        assertThat(viewSpy.disableBoardWasCalled).isTrue()
+        assertThat(viewSpy.playerOneScore).isEqualTo(1)
         assertThat(viewSpy.notifyTieWasCalled).isFalse()
     }
 
@@ -125,10 +130,14 @@ class TicTacToePresenterImplTest {
             history = listOf(Pair(1, 1), Pair(2, 2))
         )
         useCaseMock.setResult(expectedResult)
+        useCaseMock.setScore(TicTacToeScore(1, 2))
 
         presenter.onTileClick(1, 1)
 
         assertThat(viewSpy.updatedPlayerTwoTile).isEqualTo(Pair(2, 2))
+        assertThat(viewSpy.playerOneScore).isEqualTo(1)
+        assertThat(viewSpy.playerTwoScore).isEqualTo(2)
+        assertThat(viewSpy.disableBoardWasCalled).isTrue()
         assertThat(viewSpy.notifyPlayerTwoVictoryWasCalled).isTrue()
         assertThat(viewSpy.notifyPlayerOneVictoryWasCalled).isFalse()
         assertThat(viewSpy.notifyTieWasCalled).isFalse()

@@ -51,8 +51,15 @@ dependencies {
     implementation("androidx.compose.ui:ui:${rootProject.extra["compose_version"]}")
     implementation("androidx.compose.material:material:${rootProject.extra["compose_version"]}")
     implementation("androidx.compose.ui:ui-tooling:${rootProject.extra["compose_version"]}")
+    implementation("androidx.compose.runtime:runtime-livedata:${rootProject.extra["compose_version"]}")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.3.0-alpha06")
+
     implementation("androidx.activity:activity-compose:1.3.0-alpha02")
+
+    implementation("io.insert-koin:koin-core:2.2.2")
+    implementation("io.insert-koin:koin-android:2.2.2")
+    implementation("io.insert-koin:koin-androidx-viewmodel:2.2.2")
+
 
     testImplementation("org.junit.jupiter:junit-jupiter-api:5.7.1")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.7.1")

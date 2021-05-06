@@ -18,6 +18,7 @@ class TicTacToePresenterImpl(private val useCase: TicTacToeUseCase) : TicTacToeP
 
         view.apply {
             clearBoard()
+            enableBoard()
             setPlayerOneScore(score.playerOneScore)
             setPlayerTwoScore(score.playerTwoScore)
         }
@@ -49,13 +50,22 @@ class TicTacToePresenterImpl(private val useCase: TicTacToeUseCase) : TicTacToeP
     }
 
     private fun updateViewOnWinner() {
-        if (currentMatch.winner == 1)
-            view.notifyPlayerOneVictory()
-        else
-            view.notifyPlayerTwoVictory()
+        val newScore = useCase.getScore()
+
+        view.apply {
+            disableBoard()
+            setPlayerOneScore(newScore.playerOneScore)
+            setPlayerTwoScore(newScore.playerTwoScore)
+
+            if (currentMatch.winner == 1)
+                notifyPlayerOneVictory()
+            else
+                notifyPlayerTwoVictory()
+        }
     }
 
     private fun updateViewOnTie() {
+        view.disableBoard()
         view.notifyTie()
     }
 

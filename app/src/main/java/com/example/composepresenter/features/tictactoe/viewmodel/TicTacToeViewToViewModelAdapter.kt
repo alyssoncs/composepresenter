@@ -6,16 +6,16 @@ import androidx.lifecycle.ViewModel
 import com.example.composepresenter.features.tictactoe.presentation.TicTacToeView
 import com.example.composepresenter.libraries.mvvmevent.MvvmEvent
 
-class TicTacToeViewState : ViewModel(), TicTacToeView {
+class TicTacToeViewToViewModelAdapter : ViewModel(), TicTacToeView {
     companion object {
         private const val BOARD_SIZE = 3
     }
 
-    sealed class Toast {
-        data class InvalidMove(val x: Int, val y: Int): Toast()
-        object Tie: Toast()
-        object PlayerOneVictory : Toast()
-        object PlayerTwoVictory : Toast()
+    sealed class Snackbar {
+        data class InvalidMove(val x: Int, val y: Int): Snackbar()
+        object Tie: Snackbar()
+        object PlayerOneVictory : Snackbar()
+        object PlayerTwoVictory : Snackbar()
     }
 
     enum class Tile {
@@ -33,8 +33,11 @@ class TicTacToeViewState : ViewModel(), TicTacToeView {
     private val _playerTwoScore = MutableLiveData<Int>()
     val playerTwoScore: LiveData<Int> = _playerTwoScore
 
-    private val _toast = MutableLiveData<MvvmEvent<Toast>>()
-    val toast: LiveData<MvvmEvent<Toast>> = _toast
+    private val _snackbar = MutableLiveData<MvvmEvent<Snackbar>>()
+    val snackbar: LiveData<MvvmEvent<Snackbar>> = _snackbar
+
+    private val _isBoardEnabled = MutableLiveData<Boolean>(true)
+    val isBoardEnabled: LiveData<Boolean> = _isBoardEnabled
 
     override fun clearBoard() {
         _board.forEach { row ->
@@ -42,6 +45,14 @@ class TicTacToeViewState : ViewModel(), TicTacToeView {
                 tile.value = Tile.Empty
             }
         }
+    }
+
+    override fun enableBoard() {
+        _isBoardEnabled.value = true
+    }
+
+    override fun disableBoard() {
+        _isBoardEnabled.value = false
     }
 
     override fun setPlayerOneScore(score: Int) {
@@ -61,18 +72,18 @@ class TicTacToeViewState : ViewModel(), TicTacToeView {
     }
 
     override fun notifyInvalidMove(x: Int, y: Int) {
-        _toast.value = MvvmEvent(Toast.InvalidMove(x, y))
+        _snackbar.value = MvvmEvent(Snackbar.InvalidMove(x, y))
     }
 
     override fun notifyTie() {
-        _toast.value = MvvmEvent(Toast.Tie)
+        _snackbar.value = MvvmEvent(Snackbar.Tie)
     }
 
     override fun notifyPlayerOneVictory() {
-        _toast.value = MvvmEvent(Toast.PlayerOneVictory)
+        _snackbar.value = MvvmEvent(Snackbar.PlayerOneVictory)
     }
 
     override fun notifyPlayerTwoVictory() {
-        _toast.value = MvvmEvent(Toast.PlayerTwoVictory)
+        _snackbar.value = MvvmEvent(Snackbar.PlayerTwoVictory)
     }
 }

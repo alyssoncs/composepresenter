@@ -7,6 +7,12 @@ class TicTacToeViewSpy : TicTacToeView {
     var clearBoardWasCalled = false
         private set
 
+    var enableBoardWasCalled: Boolean = false
+        private set
+
+    var disableBoardWasCalled: Boolean = false
+        private set
+
     var notifyTieWasCalled: Boolean = false
         private set
 
@@ -32,6 +38,10 @@ class TicTacToeViewSpy : TicTacToeView {
         private set
 
     override fun clearBoard() { clearBoardWasCalled = true }
+
+    override fun enableBoard() { enableBoardWasCalled = true }
+
+    override fun disableBoard() { disableBoardWasCalled = true }
 
     override fun setPlayerOneScore(score: Int) { playerOneScore = score }
 
