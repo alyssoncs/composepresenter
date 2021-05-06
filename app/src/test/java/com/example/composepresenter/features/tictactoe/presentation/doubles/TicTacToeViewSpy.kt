@@ -22,10 +22,10 @@ class TicTacToeViewSpy : TicTacToeView {
     var notifyPlayerTwoVictoryWasCalled: Boolean = false
         private set
 
-    var playerOneScore = 0
+    var playerOneScore = -1
         private set
 
-    var playerTwoScore = 0
+    var playerTwoScore = -1
         private set
 
     var updatedPlayerOneTile: Pair<Int, Int>? = null

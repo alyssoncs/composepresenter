@@ -33,6 +33,15 @@ class TicTacToePresenterImpl(private val useCase: TicTacToeUseCase) : TicTacToeP
         }
     }
 
+    override fun onClearScore() {
+        useCase.clearScore()
+        val score = useCase.getScore()
+        view.apply {
+            setPlayerOneScore(score.playerOneScore)
+            setPlayerTwoScore(score.playerTwoScore)
+        }
+    }
+
     private fun updateViewAfterPlay() {
         updateViewTile()
         if (currentMatch.hasWinner)

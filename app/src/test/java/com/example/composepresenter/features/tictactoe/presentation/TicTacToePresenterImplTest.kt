@@ -142,4 +142,13 @@ class TicTacToePresenterImplTest {
         assertThat(viewSpy.notifyPlayerOneVictoryWasCalled).isFalse()
         assertThat(viewSpy.notifyTieWasCalled).isFalse()
     }
+
+    @Test
+    fun `on clear score`() {
+        presenter.onClearScore()
+
+        val score = useCaseMock.getScore()
+        assertThat(viewSpy.playerOneScore).isEqualTo(score.playerOneScore)
+        assertThat(viewSpy.playerTwoScore).isEqualTo(score.playerTwoScore)
+    }
 }
