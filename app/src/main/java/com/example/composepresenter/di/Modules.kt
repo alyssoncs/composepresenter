@@ -1,6 +1,6 @@
 package com.example.composepresenter.di
 
-import com.example.composepresenter.concreteinfra.tictactoerepository.inmemory.InMemoryTicTacToeRepository
+import com.example.composepresenter.concreteinfra.tictactoerepository.preferences.PreferencesTicTacToeRepository
 import com.example.composepresenter.features.tictactoe.presentation.TicTacToePresenter
 import com.example.composepresenter.features.tictactoe.presentation.TicTacToePresenterImpl
 import com.example.composepresenter.features.tictactoe.viewmodel.TicTacToePresenterWrapper
@@ -13,7 +13,9 @@ import org.koin.dsl.module
 
 val ticTacToeRepositoryModule = module {
     single<TicTacToeRepository> {
-        InMemoryTicTacToeRepository()
+        PreferencesTicTacToeRepository(
+            context = get()
+        )
     }
 }
 
