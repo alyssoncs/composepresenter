@@ -39,7 +39,6 @@ class TicTacToeActivity : ComponentActivity() {
         }
     }
 
-
     @Composable
     fun TicTacToe() {
         val snackbarState by viewState.snackbar.observeAsState()
@@ -57,12 +56,12 @@ class TicTacToeActivity : ComponentActivity() {
                     TicTacToeBoard()
                 }
                 Column(
+                    verticalArrangement = Arrangement.Bottom,
+                    horizontalAlignment = Alignment.CenterHorizontally,
                     modifier = Modifier
                         .fillMaxSize()
                         .padding(16.dp),
-                    verticalArrangement = Arrangement.Bottom,
-                    horizontalAlignment = Alignment.CenterHorizontally
-                ){
+                ) {
                     Button(
                         onClick = { presenter.onStart() },
                         modifier = Modifier
@@ -71,11 +70,20 @@ class TicTacToeActivity : ComponentActivity() {
                     ) {
                         Text(text = "RESTART", fontSize = 16.sp)
                     }
+                    Spacer(modifier = Modifier.size(8.dp))
+                    Button(
+                        onClick = { presenter.onClearScore() },
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(48.dp)
+                    ) {
+                        Text(text = "CLEAR SCORE", fontSize = 16.sp)
+                    }
                 }
 
                 snackbarState?.getContentIfNotHandled()?.let {
                     val text = when (it) {
-                        is TicTacToeViewToViewModelAdapter.Snackbar.InvalidMove -> "Invalid move at (${it.x+1}, ${it.x+1})"
+                        is TicTacToeViewToViewModelAdapter.Snackbar.InvalidMove -> "Invalid move at (${it.x + 1}, ${it.x + 1})"
                         is TicTacToeViewToViewModelAdapter.Snackbar.PlayerOneVictory -> "Player one wins"
                         is TicTacToeViewToViewModelAdapter.Snackbar.PlayerTwoVictory -> "Player two wins"
                         is TicTacToeViewToViewModelAdapter.Snackbar.Tie -> "Good game, it was a tie"
@@ -112,11 +120,12 @@ class TicTacToeActivity : ComponentActivity() {
 
     @Composable
     private fun TicTacToeBoard() {
-        val board: List<List<State<TicTacToeViewToViewModelAdapter.Tile>>> = viewState.board.map { row ->
-            row.map {
-                it.observeAsState(TicTacToeViewToViewModelAdapter.Tile.Empty)
+        val board: List<List<State<TicTacToeViewToViewModelAdapter.Tile>>> =
+            viewState.board.map { row ->
+                row.map {
+                    it.observeAsState(TicTacToeViewToViewModelAdapter.Tile.Empty)
+                }
             }
-        }
         val isBoardEnabled by viewState.isBoardEnabled.observeAsState(true)
         Column {
             board.forEachIndexed() { x, row ->
@@ -165,11 +174,6 @@ class TicTacToeActivity : ComponentActivity() {
                 }
             )
         }
-    }
-
-    private fun toast(msg: String) {
-        //Snackbar.make(, msg, Snackbar.LENGTH_LONG).
-        Toast.makeText( this, msg, Toast.LENGTH_LONG).show()
     }
 
     @Preview
