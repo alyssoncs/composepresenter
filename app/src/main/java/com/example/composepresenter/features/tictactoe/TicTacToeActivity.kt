@@ -83,7 +83,7 @@ class TicTacToeActivity : ComponentActivity() {
 
                 snackbarState?.getContentIfNotHandled()?.let {
                     val text = when (it) {
-                        is TicTacToeViewToViewModelAdapter.Snackbar.InvalidMove -> "Invalid move at (${it.x + 1}, ${it.x + 1})"
+                        is TicTacToeViewToViewModelAdapter.Snackbar.InvalidMove -> "Invalid move at (${it.x + 1}, ${it.y + 1})"
                         is TicTacToeViewToViewModelAdapter.Snackbar.PlayerOneVictory -> "Player one wins"
                         is TicTacToeViewToViewModelAdapter.Snackbar.PlayerTwoVictory -> "Player two wins"
                         is TicTacToeViewToViewModelAdapter.Snackbar.Tie -> "Good game, it was a tie"
